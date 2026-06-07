@@ -1,1 +1,55 @@
-<router-outlet />
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar"
+         [class.collapsed]="isCollapsed"
+         [class.mobile-open]="isMobileOpen">
+
+    <div class="sidebar-header">
+      <span class="logo">💊</span>
+      <span class="brand" *ngIf="!isCollapsed">PharmaSys</span>
+    </div>
+
+    <nav class="menu">
+      <a class="menu-item active">
+        <i class="bi bi-speedometer2"></i>
+        <span *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+
+      <a class="menu-item">
+        <i class="bi bi-capsule"></i>
+        <span *ngIf="!isCollapsed">Medicines</span>
+      </a>
+
+      <a class="menu-item">
+        <i class="bi bi-receipt"></i>
+        <span *ngIf="!isCollapsed">Billing</span>
+      </a>
+    </nav>
+
+  </aside>
+
+  <!-- Overlay (mobile only) -->
+  <div class="overlay"
+       *ngIf="isMobileOpen"
+       (click)="closeMobile()">
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <header class="topbar">
+      <button class="btn btn-light btn-sm" (click)="toggleSidebar()">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <div class="user">Admin</div>
+    </header>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,109 @@
+<div class="kpi-strip row overflow-auto">
+
+    <!-- Revenue -->
+    <div class="kpi-card col-lg-2 col-md-3 col-sm-6 p-3 shadow-sm rounded bg-white">
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Revenue</small>
+                <h5 class="mb-0">₹12,450</h5>
+            </div>
+            <i class="pi pi-wallet kpi-icon text-primary"></i>
+        </div>
+        <small class="text-success">↑ 12%</small>
+    </div>
+
+    <!-- Profit -->
+    <div class="kpi-card col-lg-2 col-md-3 col-sm-6 p-3 shadow-sm rounded bg-white">
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Profit</small>
+                <h5 class="mb-0">₹3,200</h5>
+            </div>
+            <i class="pi pi-chart-line kpi-icon text-success"></i>
+        </div>
+        <small class="text-success">↑ 8%</small>
+    </div>
+
+    <!-- Bills -->
+    <div class="kpi-card col-lg-2 col-md-3 col-sm-6 p-3 shadow-sm rounded bg-white">
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Bills</small>
+                <h5 class="mb-0">38</h5>
+            </div>
+            <i class="pi pi-receipt kpi-icon text-warning"></i>
+        </div>
+        <small class="text-success">↑ 5%</small>
+    </div>
+
+    <!-- Items Sold -->
+    <div class="kpi-card col-lg-2 col-md-3 col-sm-6 p-3 shadow-sm rounded bg-white">
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Items Sold</small>
+                <h5 class="mb-0">245</h5>
+            </div>
+            <i class="pi pi-box kpi-icon text-info"></i>
+        </div>
+        <small class="text-success">↑ 10%</small>
+    </div>
+
+    <!-- Low Stock -->
+    <div class="kpi-card col-lg-2 col-md-3 col-sm-6 p-3 shadow-sm rounded bg-white">
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Low Stock</small>
+                <h5 class="mb-0 text-danger">6</h5>
+            </div>
+            <i class="pi pi-exclamation-triangle kpi-icon text-danger"></i>
+        </div>
+        <small class="text-danger">↓ 2</small>
+    </div>
+
+    <!-- Expired -->
+    <div class="kpi-card col-lg-2 col-md-3 col-sm-6 p-3 shadow-sm rounded bg-white">
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Expired</small>
+                <h5 class="mb-0 text-danger">2</h5>
+            </div>
+            <i class="pi pi-times-circle kpi-icon text-danger"></i>
+        </div>
+        <small class="text-danger">↑ 1</small>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h6>Sales</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h6>Category</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h6>Profit vs Revenue</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="profitRevenueChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

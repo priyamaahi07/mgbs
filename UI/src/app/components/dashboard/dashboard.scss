@@ -1,0 +1,20 @@
+.kpi-strip {
+    padding: 10px 0;
+}
+
+/* KPI Card */
+.kpi-card {
+    min-width: 180px;
+    border: 1px solid #eef0f5;
+    transition: all 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* PrimeNG icon size */
+.kpi-icon {
+    font-size: 1.8rem;
+}

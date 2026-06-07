@@ -1,0 +1,21 @@
+<div class="row h-100vh">
+    <div class="col-lg-4 col-md-8 col-sm-12 m-auto">
+        <div class="card">
+            <div class="card-body m-auto">
+                <form [formGroup]="loginForm">
+                    <div class="mb-4">
+                        <label class="row" for="username">Username</label>
+                        <input class="row" pInputText id="username" type="text" formControlName="username" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="row" for="password">Password</label>
+                        <input class="row" pInputText id="password" type="password" formControlName="password" />
+                    </div>
+                    <div class="w-100">
+                        <p-button (onClick)="login()" label="Login" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
