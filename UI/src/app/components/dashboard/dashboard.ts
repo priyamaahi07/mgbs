@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../services/common-service';
 import { Chart } from 'chart.js/auto';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

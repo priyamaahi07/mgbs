@@ -1,0 +1,202 @@
+<div class="row">
+    <div class="col"></div>
+    <div class="col-auto">
+        <p-button size="small" icon="pi pi-plus" label="Create" (onClick)="openCreateModel()"></p-button>
+    </div>
+</div>
+<div class="mt-2 card table-responsive">
+    <p-table [columns]="cols" [value]="invoiceList" [scrollable]="true" scrollHeight="500px" [rows]="30"
+        [virtualScroll]="true" [virtualScrollItemSize]="30" [lazy]="true" (onLazyLoad)="loadCarsLazy($event)"
+        paginator="true" [rowsPerPageOptions]="[30, 60, 100]">
+        <ng-template #header let-columns>
+            <tr>
+                <th *ngFor="let col of columns" style="width: 20%;">
+                    {{ col.header }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowData let-columns="columns">
+            <tr style="height:46px">
+                <td *ngFor="let col of columns">
+                    {{ rowData[col.field] }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #loadingbody let-columns="columns">
+            <tr style="height:46px">
+                <td *ngFor="let col of columns; let even = even">
+                    <p-skeleton [ngStyle]="{ width: even ? (col.field === 'year' ? '30%' : '40%') : '60%' }" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Create Invoice" [modal]="true" [(visible)]="isCreateModalOpen" [style]="{ width: '80vw' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <form [formGroup]="invoiceForm">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <p-floatlabel variant="in">
+                    <input pSize="small" class="input-text" pInputText id="in_label" formControlName="invoice_number"
+                        autocomplete="off" />
+                    <label for="in_label">Invoice Number</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <p-floatlabel variant="in">
+                    <input pSize="small" class="input-text" pInputText id="in_label" formControlName="customer_name"
+                        autocomplete="off" />
+                    <label for="in_label">Name</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <p-floatlabel variant="in">
+                    <input pSize="small" class="input-text" pInputText id="in_label" formControlName="phno"
+                        autocomplete="off" />
+                    <label for="in_label">Mobile Number</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-auto mr-auto">
+                <p-fileupload mode="basic" name="demo[]" chooseIcon="pi pi-upload" accept=".xlsx" maxFileSize="1000000"
+                    (onSelect)="onBasicUploadAuto($event)" [auto]="false" chooseLabel="Browse" />
+                <!-- <p-button icon="pi pi-file-import" label=""></p-button> -->
+            </div>
+        </div>
+        <div class="row">
+            <p-table [value]="items.controls" formArrayName="items" responsiveLayout="scroll">
+
+                <ng-template #header>
+                    <tr>
+                        <th style="width:25%">Item Name</th>
+                        <th style="width:25%">Quantity</th>
+                        <th style="width:25%">Unit</th>
+                        <th style="width:25%">Rate</th>
+                        <th style="width:25%">Disount</th>
+                        <th style="width:25%">Amount</th>
+                        <th style="width:25%"></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+
+                    <tr [formGroupName]="rowIndex">
+                        <td [pEditableColumn]="rowIndex" pEditableColumnField="item">
+                            <!-- <p-cellEditor>
+                                <ng-template #input> -->
+                            <input pSize="small" pInputText autofocus type="text" formControlName="item" fluid />
+                            <!-- </ng-template>
+                                <ng-template #output>
+                                    {{ row.get('item')?.value }}
+                                </ng-template>
+                            </p-cellEditor> -->
+                        </td>
+                        <td [pEditableColumn]="rowIndex" pEditableColumnField="qty">
+                            <p-cellEditor>
+                                <ng-template #input>
+                                    <input pSize="small" pInputText type="number" formControlName="qty" fluid />
+                                </ng-template>
+                                <ng-template #output>
+                                    {{ row.get('qty')?.value }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td [pEditableColumn]="rowIndex" pEditableColumnField="unit">
+                            <p-cellEditor>
+                                <ng-template #input>
+                                    <input pSize="small" pInputText type="text" formControlName="unit" fluid />
+                                </ng-template>
+                                <ng-template #output>
+                                    {{ row.get('unit')?.value }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td [pEditableColumn]="rowIndex" pEditableColumnField="rate">
+                            <p-cellEditor>
+                                <ng-template #input>
+                                    <input pSize="small" pInputText type="number" formControlName="rate" fluid />
+                                </ng-template>
+                                <ng-template #output>
+                                    {{ row.get('rate')?.value }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td [pEditableColumn]="rowIndex" pEditableColumnField="discount">
+                            <p-cellEditor>
+                                <ng-template #input>
+                                    <input pSize="small" pInputText type="number" formControlName="discount" fluid />
+                                </ng-template>
+                                <ng-template #output>
+                                    {{ row.get('discount')?.value }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td [pEditableColumn]="rowIndex" pEditableColumnField="amount">
+                            <p-cellEditor>
+                                <ng-template #input>
+                                    <input pSize="small" pInputText type="number" formControlName="amount" fluid />
+                                </ng-template>
+                                <ng-template #output>
+                                    {{ row.get('amount')?.value }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td>
+                            <button pButton size="small" icon="pi pi-trash" severity="danger" type="button"
+                                (click)="removeItem(rowIndex)">
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </ng-template>
+
+            </p-table>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <button pButton size="small" type="button" icon="pi pi-plus" label="Add Row" (click)="addItem()">
+                </button>
+            </div>
+            <div class="col-auto">
+                <p-floatlabel variant="in">
+                    <p-inputNumber formControlName="total_amount" id="in_label" [readonly]="true">
+                    </p-inputNumber>
+                    <label for="in_label">Total</label>
+                </p-floatlabel>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <p-floatlabel variant="in">
+                    <input pSize="small" class="input-text" pInputText id="in_label" formControlName="amount_paid"
+                        autocomplete="off" />
+                    <label for="in_label">Amount Paid</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <p-floatlabel variant="in">
+                    <input pSize="small" [readOnly]="true" class="input-text" pInputText id="in_label"
+                        formControlName="balance" autocomplete="off" />
+                    <label for="in_label">Balance</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <p-floatlabel class="w-full md:w-56" variant="in">
+                    <p-select formControlName="payment_mode" inputId="in_label" [options]="paymentModes"
+                        optionLabel="label" class="w-full" variant="filled" />
+                    <label for="in_label">Payment Mode</label>
+                </p-floatlabel>
+            </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <button pButton size="small" type="button" label="Save" class="me-4" (click)="saveInvoice()">
+            </button>
+            <button pButton size="small" type="button" label="Save & Print" (click)="savePrintInvoice()">
+            </button>
+        </div>
+    </form>
+</p-dialog>

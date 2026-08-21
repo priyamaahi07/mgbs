@@ -1,50 +1,62 @@
 <div class="layout">
 
   <!-- Sidebar -->
-  <aside class="sidebar"
-         [class.collapsed]="isCollapsed"
-         [class.mobile-open]="isMobileOpen">
+  @if (isLogin) {
+  <aside class="sidebar" [class.collapsed]="isCollapsed" [class.mobile-open]="isMobileOpen">
 
-    <div class="sidebar-header">
+    <a class="sidebar-header" href="/">
       <span class="logo">💊</span>
-      <span class="brand" *ngIf="!isCollapsed">PharmaSys</span>
-    </div>
+      @if (!isCollapsed) {
+      <span class="brand">PharmaSys</span>
+      }
+    </a>
 
     <nav class="menu">
-      <a class="menu-item active">
+      <a (click)="navigateRoute('dashboard')" class="menu-item" [ngClass]="{'active': menu === 'dashboard'}">
         <i class="bi bi-speedometer2"></i>
-        <span *ngIf="!isCollapsed">Dashboard</span>
+        @if (!isCollapsed) {
+        <span>Dashboard</span>
+        }
       </a>
-
-      <a class="menu-item">
-        <i class="bi bi-capsule"></i>
-        <span *ngIf="!isCollapsed">Medicines</span>
-      </a>
-
-      <a class="menu-item">
+      <a (click)="navigateRoute('billing')" class="menu-item" [ngClass]="{'active': menu === 'billing'}">
         <i class="bi bi-receipt"></i>
-        <span *ngIf="!isCollapsed">Billing</span>
+        @if (!isCollapsed) {
+        <span>Billing</span>
+        }
       </a>
+      <a (click)="navigateRoute('medicines')" class="menu-item" [ngClass]="{'active': menu === 'medicines'}">
+        <i class="bi bi-capsule"></i>
+        @if (!isCollapsed) {
+        <span>Medicines</span>
+        }
+      </a>
+
+
     </nav>
 
+    <button class="btn btn-sm toggle-sidebar-btn" (click)="toggleSidebar()">
+      <i class="bi bi-list"></i>
+    </button>
   </aside>
 
+  }
+
   <!-- Overlay (mobile only) -->
-  <div class="overlay"
-       *ngIf="isMobileOpen"
-       (click)="closeMobile()">
-  </div>
+  @if(isMobileOpen){
+  <div class="overlay" (click)="closeMobile()">
+  </div>}
 
   <!-- Main -->
   <div class="main">
 
+    <!-- @if (isLogin) {
     <header class="topbar">
-      <button class="btn btn-light btn-sm" (click)="toggleSidebar()">
-        <i class="bi bi-list"></i>
-      </button>
-
-      <div class="user">Admin</div>
+      <div> </div>
+      <div class="ml-auto">
+        <i class="bi bi-people"></i>
+      </div>
     </header>
+    } -->
 
     <div class="content">
       <router-outlet></router-outlet>

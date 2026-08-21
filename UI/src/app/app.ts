@@ -1,12 +1,12 @@
 import { Component, HostListener, OnInit, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RouterLinkWithHref } from '@angular/router';
 import { CommonService } from './services/common-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormsModule, CommonModule],
+  imports: [RouterOutlet, FormsModule, CommonModule, RouterLinkWithHref],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -14,14 +14,17 @@ export class App implements OnInit {
   protected readonly title = signal('ui');
 
 
-  isCollapsed: boolean = false;     // desktop collapse
+  isCollapsed: boolean = true;     // desktop collapse
   isMobile: boolean = false;
   isMobileOpen: boolean = false;
 
+  menu: string = '';
+  isLogin: boolean = false;
   constructor(private _router: Router, private _commonService: CommonService) {
-    const isLogin: any = this._commonService.getLoginStatus();
-    if (isLogin) {
-      this._router.navigate(['/dashboard']);
+    this.isLogin = this._commonService.getLoginStatus();
+    if (this.isLogin) {
+      this.menu = 'dashboard';
+      // this._router.navigate(['/dashboard']);
     } else {
       this._router.navigate(['/login']);
     }
@@ -38,6 +41,11 @@ export class App implements OnInit {
     if (!this.isMobile) {
       this.isMobileOpen = false; // reset mobile state
     }
+  }
+
+  navigateRoute(route: string) {
+    this.menu = route;
+    this._router.navigate([`${route}`]);
   }
 
   toggleSidebar() {
