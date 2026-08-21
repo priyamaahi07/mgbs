@@ -71,6 +71,11 @@ const invoiceSchema = new mongoose.Schema(
         payment_mode: {
             type: String,
             required: true
+        },
+        created_by: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
         }
     },
     {

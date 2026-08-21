@@ -46,15 +46,9 @@ export class Login implements OnInit {
       next: (response: any) => {
         console.log(response);
         if (response.status === true) {
+          localStorage.setItem('token', response.token);
+          this._router.navigate(['dashboard']);
 
-          this._commonService.setLoginStatus();
-
-          const isLogin: boolean = this._commonService.getLoginStatus();
-          if (isLogin) {
-            this._router.navigate(['dashboard'])
-          } else {
-
-          }
         }
       },
       error: (error: any) => { },

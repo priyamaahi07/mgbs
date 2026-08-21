@@ -7,7 +7,7 @@ const connectDB = require('./src/database/connection');
 const app = express();
 
 const User = require('./src/models/User');
-
+const jwt = require('jsonwebtoken');
 // Enable CORS
 app.use(cors());
 
@@ -37,9 +37,21 @@ app.post('/login', async (req, res) => {
             });
         }
 
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                username: user.username
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '1d'
+            }
+        );
+
         res.status(200).json({
             status: true,
             message: 'Login successful',
+            token: token,
             data: user
         });
 

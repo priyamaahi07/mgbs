@@ -2,7 +2,11 @@ const Invoice = require('../models/Invoice');
 
 const createInvoice = async (req, res) => {
   try {
-    const invoice = await Invoice.create(req.body);
+    const invoiceData = {
+      ...req.body,
+      created_by: req.user.userId
+    };
+    const invoice = await Invoice.create(invoiceData);
 
     res.status(201).json({
       status: true,

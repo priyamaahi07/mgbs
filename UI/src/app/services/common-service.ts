@@ -6,9 +6,6 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root',
 })
 export class CommonService {
-  setLoginStatus() {
-    localStorage.setItem('isLogin', 'true');
-  }
 
   private apiUrl = 'http://localhost:3000/';
 
@@ -23,7 +20,7 @@ export class CommonService {
   }
 
   getLoginStatus() {
-    const loginStatus: string | null = localStorage.getItem('isLogin');
+    const loginStatus: string | null = localStorage.getItem('token');
     if (loginStatus === null) {
       return false;
     }
