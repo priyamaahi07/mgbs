@@ -5,8 +5,8 @@
     </div>
 </div>
 <div class="mt-2 card table-responsive">
-    <p-table [columns]="cols" [value]="invoiceList" [scrollable]="true" scrollHeight="500px" [rows]="30"
-        [virtualScroll]="true" [virtualScrollItemSize]="30" [lazy]="true" (onLazyLoad)="loadCarsLazy($event)"
+    <p-table [columns]="cols" [value]="invoiceList" [scrollable]="true" scrollHeight="500px" [rows]="30" 
+        [virtualScroll]="true" [virtualScrollItemSize]="30" [lazy]="true" (onLazyLoad)="getList($event)"
         paginator="true" [rowsPerPageOptions]="[30, 60, 100]">
         <ng-template #header let-columns>
             <tr>

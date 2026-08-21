@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use(express.json());
 
-
+const invoiceRoutes = require('./src/routes/invoiceRoutes');
 
 // Connect to MongoDB
 connectDB();
@@ -21,6 +21,8 @@ connectDB();
 app.get('/', (req, res) => {
     res.send('Server is running');
 });
+
+app.use('/api/invoices', invoiceRoutes);
 
 app.post('/login', async (req, res) => {
     try {
@@ -48,6 +50,7 @@ app.post('/login', async (req, res) => {
         });
     }
 });
+
 
 const PORT = process.env.PORT || 3000;
 

@@ -22,36 +22,32 @@ import * as XLSX from 'xlsx';
 })
 export class Billing implements OnInit {
   paymentModes: any = [{ key: 'cash', label: 'Cash' }, { key: 'upi', label: 'UPI' }, { key: 'card', label: 'Card' }]
-  cols: any = [
-    {
-      header: "date",
-      field: "date"
-    },
-    {
-      header: "invoice_number",
-      field: "invoice_number"
-    },
-    {
-      header: "customer_name",
-      field: "customer_name"
-    },
-    {
-      header: "total_amount",
-      field: "total_amount"
-    },
-    {
-      header: "payment_status",
-      field: "payment_status"
-    },
-    {
-      header: "payment_mode",
-      field: "payment_mode"
-    },
+  cols: any = [{
+    header: "Invoice number",
+    field: "invoice_number"
+  },
+  {
+    header: "Customer name",
+    field: "customer_name"
+  },
+  {
+    header: "Total amount",
+    field: "total_amount"
+  },
+  {
+    header: "Payment status",
+    field: "payment_status"
+  },
+  {
+    header: "Payment mode",
+    field: "payment_mode"
+  },
   ]
   invoiceList = [];
 
   invoiceForm!: FormGroup;
   isCreateModalOpen: boolean = false;
+  private lastLazyLoadEvent: any;
   constructor(private _commonService: CommonService, private _formBuilder: FormBuilder) {
     this.invoiceForm = this._formBuilder.group({
       invoice_number: ['', Validators.required],
@@ -94,6 +90,17 @@ export class Billing implements OnInit {
 
   }
 
+  getList(event: any) {
+    console.log('Loading List: ', event);
+    this.lastLazyLoadEvent = event;
+    this._commonService.getRequest(`api/invoices/`).subscribe({
+      next: (response: any) => {
+        console.log('Response: List ', response);
+        this.invoiceList = response.data;
+      },
+      error: (error: any) => { },
+    })
+  }
   get items(): FormArray {
     return this.invoiceForm.get('items') as FormArray;
   }
@@ -106,16 +113,8 @@ export class Billing implements OnInit {
     this.items.removeAt(index);
   }
 
-  loadCarsLazy(event: any) {
-    console.log('event: ', event)
-  }
-
   openCreateModel() {
     this.isCreateModalOpen = true;
-  }
-
-  saveInvoice() {
-
   }
 
   savePrintInvoice() {
@@ -215,4 +214,40 @@ export class Billing implements OnInit {
     });
   }
 
+  saveInvoice(): void {
+
+    if (this.invoiceForm.invalid) {
+      this.invoiceForm.markAllAsTouched();
+      return;
+    }
+
+    const invoiceData = this.invoiceForm.getRawValue();
+
+    invoiceData.payment_mode = invoiceData.payment_mode ? invoiceData.payment_mode?.key : '';
+
+    console.log('Saving invoice:', invoiceData);
+
+    this._commonService.postRequest(`api/invoices/`, invoiceData).subscribe({
+      next: (response: any) => {
+        console.log('Invoice saved:', response);
+
+        // Optional
+        this.invoiceForm.reset();
+
+        this.invoiceForm.setControl(
+          'items',
+          this._formBuilder.array([
+            this.createItem()
+          ])
+        );
+
+        this.getList(this.lastLazyLoadEvent);
+        this.isCreateModalOpen = false;
+      },
+
+      error: (error: any) => {
+        console.error('Error saving invoice:', error);
+      }
+    });
+  }
 }
