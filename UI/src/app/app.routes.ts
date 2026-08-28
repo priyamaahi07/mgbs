@@ -1,23 +1,29 @@
 import { Routes } from '@angular/router';
-import { Login } from './auth/login/login';
-import { Dashboard } from './components/dashboard/dashboard';
-import { Billing } from './components/billing/billing';
 
 export const routes: Routes = [
     {
         path: 'login',
-        component: Login
+        loadComponent: () => import('./auth/login/login').then(c => c.Login)
     },
     {
         path: '',
-        component: Dashboard
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
     },
     {
         path: 'dashboard',
-        component: Dashboard
+        loadComponent: () => import('./components/dashboard/dashboard').then((c => c.Dashboard))
     },
     {
         path: 'billing',
-        component: Billing
-    }
+        loadComponent: () => import('./components/billing/billing').then((c => c.Billing))
+    },
+    {
+        path: 'stocks',
+        loadComponent: () => import('./components/stocks/stocks').then((c => c.Stocks))
+    },
+    {
+        path: 'products',
+        loadComponent: () => import('./components/products/products').then((c => c.Products))
+    },
 ];

@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
+
+:root {
+    --p-button-sm-font-size: 0.75rem !important;
+    --p-button-sm-padding-y: 0.275rem !important;
+    --p-button-sm-padding-x: 0.525rem !important;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent;
+}

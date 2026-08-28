@@ -7,7 +7,7 @@
     <a class="sidebar-header" href="/">
       <span class="logo">💊</span>
       @if (!isCollapsed) {
-      <span class="brand">PharmaSys</span>
+      <span class="brand">Brand Name</span>
       }
     </a>
 
@@ -24,10 +24,16 @@
         <span>Billing</span>
         }
       </a>
-      <a (click)="navigateRoute('medicines')" class="menu-item" [ngClass]="{'active': menu === 'medicines'}">
+      <a (click)="navigateRoute('stocks')" class="menu-item" [ngClass]="{'active': menu === 'stocks'}">
         <i class="bi bi-capsule"></i>
         @if (!isCollapsed) {
-        <span>Medicines</span>
+        <span>Stocks</span>
+        }
+      </a>
+      <a (click)="navigateRoute('products')" class="menu-item" [ngClass]="{'active': menu === 'products'}">
+        <i class="bi bi-capsule"></i>
+        @if (!isCollapsed) {
+        <span>Products</span>
         }
       </a>
 
