@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ButtonModule } from "primeng/button";
 
 @Component({
   selector: 'app-products',
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './products.html',
   styleUrl: './products.scss',
 })
-export class Products {
+export class Products implements OnInit {
+  constructor() { }
 
+  ngOnInit(): void {
+
+  }
+
+  openCreateModel() {
+
+  }
+  
 }

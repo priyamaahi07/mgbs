@@ -7,41 +7,25 @@
     <a class="sidebar-header" href="/">
       <span class="logo">💊</span>
       @if (!isCollapsed) {
-      <span class="brand">Brand Name</span>
+      <span class="brand">Genexis</span>
       }
     </a>
 
     <nav class="menu">
-      <a (click)="navigateRoute('dashboard')" class="menu-item" [ngClass]="{'active': menu === 'dashboard'}">
-        <i class="bi bi-speedometer2"></i>
+      @for (menuItem of sideBaarMenus; track $index) {
+      <a (click)="navigateRoute(menuItem.navigateUrl)" class="menu-item"
+        [ngClass]="{'active': navigateUrl === menuItem.navigateUrl}" [pTooltip]="(isCollapsed ? menuItem.label : '')">
+        <i [class]="menuItem.icon"></i>
         @if (!isCollapsed) {
-        <span>Dashboard</span>
+        <span>{{menuItem.label}}</span>
         }
       </a>
-      <a (click)="navigateRoute('billing')" class="menu-item" [ngClass]="{'active': menu === 'billing'}">
-        <i class="bi bi-receipt"></i>
-        @if (!isCollapsed) {
-        <span>Billing</span>
-        }
-      </a>
-      <a (click)="navigateRoute('stocks')" class="menu-item" [ngClass]="{'active': menu === 'stocks'}">
-        <i class="bi bi-capsule"></i>
-        @if (!isCollapsed) {
-        <span>Stocks</span>
-        }
-      </a>
-      <a (click)="navigateRoute('products')" class="menu-item" [ngClass]="{'active': menu === 'products'}">
-        <i class="bi bi-capsule"></i>
-        @if (!isCollapsed) {
-        <span>Products</span>
-        }
-      </a>
-
-
+      }
     </nav>
 
-    <button class="btn btn-sm toggle-sidebar-btn" (click)="toggleSidebar()">
-      <i class="bi bi-list"></i>
+    <button class="btn btn-sm toggle-sidebar-btn" (click)="toggleSidebar()"
+      [pTooltip]="isCollapsed ? 'Expand' : 'Collapse'">
+      <i class="bi" [ngClass]="{'bi-chevron-left': !isCollapsed, 'bi-chevron-right': isCollapsed}"></i>
     </button>
   </aside>
 

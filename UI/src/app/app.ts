@@ -1,12 +1,13 @@
 import { Component, HostListener, OnInit, signal } from '@angular/core';
-import { Router, RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonService } from './services/common-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormsModule, CommonModule, RouterLinkWithHref],
+  imports: [RouterOutlet, FormsModule, CommonModule, TooltipModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -18,17 +19,48 @@ export class App implements OnInit {
   isMobile: boolean = false;
   isMobileOpen: boolean = false;
 
-  menu: string = '';
-  isLogin: boolean = false;
+  navigateUrl: string = '';
   constructor(private _router: Router, private _commonService: CommonService) {
-    this.isLogin = this._commonService.getLoginStatus();
     if (this.isLogin) {
-      this.menu = 'dashboard';
+      this.navigateUrl = 'dashboard';
       // this._router.navigate(['/dashboard']);
     } else {
       this._router.navigate(['/login']);
     }
   }
+
+
+  public get sideBaarMenus(): any {
+    return [
+      {
+        label: 'Dashboard',
+        navigateUrl: 'dashboard',
+        icon: 'bi bi-speedometer2'
+      },
+      {
+        label: 'Billing',
+        navigateUrl: 'billing',
+        icon: 'bi bi-speedometer2'
+      },
+      {
+        label: 'Stocks',
+        navigateUrl: 'stocks',
+        icon: 'bi bi-speedometer2'
+      },
+      {
+        label: 'Products',
+        navigateUrl: 'products',
+        icon: 'bi bi-speedometer2'
+      },
+    ]
+  }
+
+
+  public get isLogin(): boolean {
+    const token: any = this._commonService.getLoginStatus() || '';
+    return (token !== '' && token !== null && token !== undefined);
+  }
+
 
   ngOnInit(): void {
     this.checkScreen();
@@ -44,7 +76,7 @@ export class App implements OnInit {
   }
 
   navigateRoute(route: string) {
-    this.menu = route;
+    this.navigateUrl = route;
     this._router.navigate([`${route}`]);
   }
 
